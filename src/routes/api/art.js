@@ -5,17 +5,19 @@ const ArtManager = dragondexLib.db.documentManagers.ArtManager;
 // The /art sub route for the base API route.
 
 module.exports = class ArtAPIRoute extends APIRoute {
-  constructor(app, type) {
-    super(app, 'art', type);
+  constructor(app) {
+    super(app);
+    this.path = 'art';
+    this.type = 'GET';
   }
 
-  async action(req, res) {
-    const artId = 'this-is-an-art-id';
-    let artManager = new ArtManager({ id: artId });
+  async action(req, res, next) {
+  //   const artId = 'this-is-an-art-id';
+  //   let artManager = new ArtManager({ id: artId });
+  //
+  //   await artManager.downloadData();
 
-    await artManager.downloadData();
-
-    let resJSON = artManager.getFormattedData();
+    let resJSON = {} ;//artManager.getFormattedData();
 
     res.json(resJSON);
   }
