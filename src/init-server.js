@@ -4,6 +4,6 @@ const mongoose = require('mongoose');
 const dragondexLib = require('../lib');
 
 
-let server = new dragondexLib.Server(process.env.PORT || 3000, '/', './routes');
+let server = new dragondexLib.Server(process.env.PORT || 3000, '/', __dirname + '/routes');
 server.registerRoutes();
 server.listen('Server running on port ' + server.port + '!');

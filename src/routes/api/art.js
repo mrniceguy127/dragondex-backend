@@ -12,12 +12,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
   }
 
   async action(req, res, next) {
-  //   const artId = 'this-is-an-art-id';
-  //   let artManager = new ArtManager({ id: artId });
-  //
-  //   await artManager.downloadData();
-
-    let resJSON = {} ;//artManager.getFormattedData();
+    let resJSON = {};
 
     res.json(resJSON);
   }
