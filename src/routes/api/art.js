@@ -1,6 +1,6 @@
 const dragondexLib = require('../../../lib');
 const APIRoute = dragondexLib.routes.APIRoute;
-const ArtManager = dragondexLib.db.documentManagers.ArtManager;
+const mongoose = require('mongoose');
 
 // The /art sub route for the base API route.
 
