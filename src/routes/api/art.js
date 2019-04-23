@@ -1,19 +1,37 @@
+const mongoose = require('mongoose');
+
 const dragondexLib = require('../../../lib');
 const APIRoute = dragondexLib.routes.APIRoute;
-const mongoose = require('mongoose');
+const ArtModel = dragondexLib.db.models.Art;
 
 // The /art sub route for the base API route.
 
 module.exports = class ArtAPIRoute extends APIRoute {
   constructor(app) {
     super(app);
-    this.path = 'art';
+    this.path = 'art/:artId';
     this.type = 'GET';
   }
 
   async action(req, res, next) {
-    let resJSON = {};
+    let artId = req.params.artId;
 
-    res.json(resJSON);
+    ArtModel.find({
+      artworkId: artId
+    }).exec(function(err, result) {
+      if (err) {
+        console.log("Error!");
+      } else {
+        let art = result[0];
+        let resJSON = {
+          id: art.artworkId,
+          metadata: {
+            title: art.metadata.title,
+            description: art.metadata.description
+          }
+        };
+        res.json(resJSON);
+      }
+    });
   }
 }
