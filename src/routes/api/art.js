@@ -22,15 +22,19 @@ module.exports = class ArtAPIRoute extends APIRoute {
       if (err) {
         console.log("Error!");
       } else {
+        let resJSON = {};
+
         let art = result[0];
-        let resJSON = {
-          id: art.artworkId,
-          imageUrl: art.imageUrl,
-          metadata: {
-            title: art.metadata.title,
-            description: art.metadata.description
-          }
-        };
+        if (art && art.artworkId) {
+          resJSON = {
+            id: art.artworkId,
+            imageUrl: art.imageUrl,
+            metadata: {
+              title: art.metadata.title,
+              description: art.metadata.description
+            }
+          };
+        }
         res.json(resJSON);
       }
     });

@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dragondex Demo</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      h1, p {
+        font-family: sans-serif;
+      }
+      img {
+        width: 400px;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="artTitle"></h1>
+    <p id="artDesc"></p>
+    <img id="artImage" />
+    <script>
+      var thisUrl = new URL(window.location.href);
+
+      var artId = thisUrl.searchParams.get("id");
+      var apiUrl = "/api/v1/art/" + artId;
+
+      fetch(apiUrl)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        var title = data.metadata.title;
+        var desc = data.metadata.description;
+        var imageUrl = data.imageUrl;
+
+        document.getElementById("artTitle").innerHTML = title;
+        document.getElementById("artDesc").innerHTML = desc;
+        document.getElementById("artImage").src = imageUrl;
+      });
+    </script>
+  </body>
+</html>
