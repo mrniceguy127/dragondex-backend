@@ -17,7 +17,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
     let artId = req.params.artId;
 
     ArtModel.find({
-      artworkId: artId
+      id: artId
     }).exec(function(err, result) {
       if (err) {
         console.log("Error!");
@@ -25,9 +25,9 @@ module.exports = class ArtAPIRoute extends APIRoute {
         let resJSON = {};
 
         let art = result[0];
-        if (art && art.artworkId) {
+        if (art && art.id) {
           resJSON = {
-            id: art.artworkId,
+            id: art.id,
             imageUrl: art.imageUrl,
             metadata: {
               title: art.metadata.title,
