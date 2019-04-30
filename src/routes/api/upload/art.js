@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dragondexLib = require('../../../../lib');
 const APIRoute = dragondexLib.routes.APIRoute;
 const ArtModel = dragondexLib.db.models.Art;
+const UserModel = dragondexLib.db.models.User;
 
 
 // The /user sub route for the base API route.
@@ -13,6 +14,7 @@ const ArtModel = dragondexLib.db.models.Art;
   Example request data:
 
   {
+    "user": "someId",
     "title": "Mario",
     "description": "A statue of a dragon."
   }
@@ -25,31 +27,46 @@ module.exports = class UploadArtAPIRoute extends APIRoute {
     this.type = 'POST';
   }
 
-  async action(req, res, next) {
-    let newArtData = {};
-    try {
-      newArtData = {
-        id: Date.now() + '',
-        imageUrl: 'https://i.imgur.com/GTy6a0L.png',
-        metadata: {
-          title: req.body.title,
-          description: req.body.description
-        }
-      };
-    } catch {
-      res.status(400)
-      res.json({
-        error: "Invalid request data."
-      })
-    }
+  middleList() {
+    return [
+      validateReqData
+    ];
+  }
 
-    ArtModel.create(newArtData).then(() => {
+  async action(req, res, next) {
+    let newArtData = {
+      user: req.body.user,
+      id: Date.now() + '',
+      imageUrl: 'https://i.imgur.com/GTy6a0L.png',
+      metadata: {
+        title: req.body.title,
+        description: req.body.description || ""
+      }
+    };
+
+    ArtModel.create(newArtData).then((artDoc) => {
+      let artToAdd = [{ _id: artDoc._id }];
+      return UserModel.updateOne({ id: newArtData.user }, { $push: { posts: { $each: artToAdd } } });
+    })
+    .then((userDoc) => {
       res.json(newArtData);
-    }).catch(() => {
+    })
+    .catch(() => {
       res.status(400)
       res.json({
         error: "Invalid request data."
-      })
+      });
+    });
+  }
+}
+
+function validateReqData(req, res, next) {
+  if (req.body.user && req.body.title) {
+    next();
+  } else {
+    res.status(400)
+    res.json({
+      error: "Invalid request data."
     });
   }
 }
