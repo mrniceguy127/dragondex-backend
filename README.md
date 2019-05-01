@@ -20,6 +20,7 @@ We also are using a RESTful API to handle server requests.
     "title": "This Is A Title",
     "description": "This might be a description."
   },
+  "uploadedBy": User()
 }
 ```
 
@@ -31,7 +32,56 @@ We also are using a RESTful API to handle server requests.
   "username": "pk558",
   "displayName": "Phoenix",
   "posts": [
-    //Art1, Art2, Art3...
+    Art(), Art(), Art()...
   ]
 }
 ```
+
+## API
+
+### Objects
+
+#### Art Object
+
+| Field     | Type      | Description                      |
+| --------- | --------- | -------------------------------- |
+| id        | String    | The unique ID of the artwork.    |
+| imageUrl  | String    | A URL linking to an image of the artwork. |
+| metadata  | **Art Metadata Object** | Metadata associated with the artwork. |
+| uploadedBy | **User Object** | The user who uploaded the artwork. |
+
+#### Art Metadata Object
+
+| Field     | Type      | Description                      |
+| --------- | --------- | -------------------------------- |
+| title     | String    | The title of the artwork.        |
+| description | String  | A description of the artwork.    |
+
+#### User Object
+
+| Field     | Type      | Description                      |
+| --------- | --------- | -------------------------------- |
+| id        | String    | The unique ID of the user.       |
+| username  | String    | A unique username.               |
+| displayName | String  | A display name provided by the user. |
+| posts     | Array of **Art Objects** | An array of the user's uploaded artworks. |
+
+### Routes
+
+#### Base URL
+
+```
+/api/v1
+```
+
+#### GET Art
+| Path        | `/api/v1/art`                              |
+| ----------- | ------------------------------------------ |
+| Response    | Returns an `Art` object.                   |
+| Example     | `GET /api/v1/art/<ID here>`                |
+
+#### GET User
+| Path        | `/api/v1/user`                             |
+| ----------- | ------------------------------------------ |
+| Response    | Returns a `User` object.                   |
+| Example     | `GET /api/v1/user/<ID here>`               |
