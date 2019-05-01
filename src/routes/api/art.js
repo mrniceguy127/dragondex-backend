@@ -23,7 +23,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
         console.log("Error!");
       } else {
         let resJSON = {};
-
+        
         let art = result[0];
         if (art && art.id) {
           resJSON = {
