@@ -12,7 +12,7 @@ We also are using a RESTful API to handle server requests.
 
 ### Art Object
 
-```javascript
+```json
 {
   "id": "0000000033333333aaaaaaaaffffffff",
   "imageUrl": "https://example.org/notReal.jpg",
@@ -20,20 +20,18 @@ We also are using a RESTful API to handle server requests.
     "title": "This Is A Title",
     "description": "This might be a description."
   },
-  "uploadedBy": User()
+  "uploadedBy": {}
 }
 ```
 
 ### User Object
 
-```javascript
+```json
 {
   "id": "bbbbbbbb5555555511111111cccccccc",
   "username": "pk558",
   "displayName": "Phoenix",
-  "posts": [
-    Art(), Art(), Art()...
-  ]
+  "posts": []
 }
 ```
 
