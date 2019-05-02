@@ -74,7 +74,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
       }
 
       userDataRes = {
-        id: userDoc.id,
+        id: userDoc.id.toString(),
         username: userDoc.username,
         displayName: userDoc.displayName,
         posts: posts
@@ -89,7 +89,7 @@ async function getPostByReference(ref, res) {
   let post = await ArtModel.findById(ref) // Art by object ids (found though art references in user doc).
   .then(art => {
     let postData = { // Format post data
-      id: art.id,
+      id: art.id.toString(),
       imageUrl: art.imageUrl,
       metadata: {
         title: art.metadata.title,

@@ -23,11 +23,11 @@ module.exports = class ArtAPIRoute extends APIRoute {
         console.log("Error!");
       } else {
         let resJSON = {};
-        
+
         let art = result[0];
         if (art && art.id) {
           resJSON = {
-            id: art.id,
+            id: art.id.toString(),
             imageUrl: art.imageUrl,
             metadata: {
               title: art.metadata.title,
