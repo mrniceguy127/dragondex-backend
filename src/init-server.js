@@ -1,10 +1,15 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
+
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
+require('mongoose-long')(mongoose);
+
 const dragondexLib = require('../lib');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
+
 
 mongoose.connect(process.env.MONGODB_SERVER || 'mongodb://localhost/dragondex', { useNewUrlParser: true });
 
