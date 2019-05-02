@@ -4,6 +4,9 @@ const dragondexLib = require('../../../../lib');
 const APIRoute = dragondexLib.routes.APIRoute;
 const ArtModel = dragondexLib.db.models.Art;
 const UserModel = dragondexLib.db.models.User;
+const Snowflake = dragondexLib.utils.Snowflake;
+
+let snowflakeIDGenerator = new Snowflake();
 
 
 // The /user sub route for the base API route.
@@ -36,7 +39,7 @@ module.exports = class UploadArtAPIRoute extends APIRoute {
   async action(req, res, next) {
     let newArtData = {
       user: req.body.user,
-      id: Date.now() + '',
+      id: snowflakeIDGenerator.gen(),
       imageUrl: 'https://i.imgur.com/GTy6a0L.png',
       metadata: {
         title: req.body.title,
