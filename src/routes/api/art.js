@@ -1,10 +1,11 @@
+// The /art sub route for the base API route.
+
 const mongoose = require('mongoose');
 
 const dragondexLib = require('../../../lib');
 const APIRoute = dragondexLib.routes.APIRoute;
 const ArtModel = dragondexLib.db.models.Art;
 
-// The /art sub route for the base API route.
 
 module.exports = class ArtAPIRoute extends APIRoute {
   constructor(app) {

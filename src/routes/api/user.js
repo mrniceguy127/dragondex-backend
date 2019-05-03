@@ -1,3 +1,32 @@
+// The /user sub route for the base API route.
+
+/*
+EXAMPLE RESPONSE DATA:
+{
+  "id":"testUser1",
+  "username":"some_user_name",
+  "displayName":"Some Name",
+  "posts":[
+    {
+      "id":"1556660107287",
+      "imageUrl":"https://i.imgur.com/GTy6a0L.png",
+      "metadata":{
+        "title":"Example Title #2",
+        "description": "Example description #1."
+      }
+    },
+    {
+      "id":"1556660930532",
+      "imageUrl":"https://i.imgur.com/GTy6a0L.png",
+      "metadata":{
+        "title":"Example Title #2",
+        "description": "Example description #2."
+      }
+    }
+  ]
+}
+*/
+
 const mongoose = require('mongoose');
 
 const dragondexLib = require('../../../lib');
@@ -6,34 +35,6 @@ const UserModel = dragondexLib.db.models.User;
 const ArtModel = dragondexLib.db.models.Art;
 
 
-// The /user sub route for the base API route.
-
-/*
-  EXAMPLE RESPONSE DATA:
-  {
-   "id":"testUser1",
-   "username":"some_user_name",
-   "displayName":"Some Name",
-   "posts":[
-      {
-         "id":"1556660107287",
-         "imageUrl":"https://i.imgur.com/GTy6a0L.png",
-         "metadata":{
-            "title":"Example Title #2",
-            "description": "Example description #1."
-         }
-      },
-      {
-         "id":"1556660930532",
-         "imageUrl":"https://i.imgur.com/GTy6a0L.png",
-         "metadata":{
-            "title":"Example Title #2",
-            "description": "Example description #2."
-         }
-      }
-   ]
-}
-*/
 
 module.exports = class ArtAPIRoute extends APIRoute {
   constructor(app) {
