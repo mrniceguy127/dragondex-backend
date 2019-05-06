@@ -83,3 +83,9 @@ We also are using a RESTful API to handle server requests.
 | ----------- | ------------------------------------------ |
 | Response    | Returns a `User` object.                   |
 | Example     | `GET /api/v1/user/<ID here>`               |
+
+#### POST Art
+| Path        | `/api/v1/upload/art`                              |
+| ----------- | ------------------------------------------ |
+| Response    |                    |
+| Example     | `                |
