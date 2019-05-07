@@ -8,6 +8,8 @@ We use MongoDB, a NoSQL non-relational database, to store our application's info
 
 We also are using a RESTful API to handle server requests.
 
+We use the AWS S3 free tier for image hosting.
+
 ## Document Structure
 
 ### Art Object
@@ -64,6 +66,12 @@ We also are using a RESTful API to handle server requests.
 | displayName | String  | A display name provided by the user. |
 | posts     | Array of **Art Objects** | An array of the user's uploaded artworks. |
 
+#### Art Details Objects
+| Field     | Type      | Description                      |
+| --------- | --------- | -------------------------------- |
+| title       | String    | The title of the artwork       |
+| description | String    | A description of the artwork   |
+
 ### Routes
 
 #### Base URL
@@ -84,8 +92,19 @@ We also are using a RESTful API to handle server requests.
 | Response    | Returns a `User` object.                   |
 | Example     | `GET /api/v1/user/<ID here>`               |
 
-#### POST Art
-| Path        | `/api/v1/upload/art`                              |
+#### POST Art File
+| Path        | `/api/v1/upload/artfile`                   |
 | ----------- | ------------------------------------------ |
-| Response    |                    |
-| Example     | `                |
+| Content-Type        | `multipart/form-data`                      |
+| Request Content | A field called `artwork` which is an image file of mime type `image/png` or `image/jpg` |
+| Response    | Returns a JSON object with a success property or an error property. Depending on what happened.              |
+| Example     | POST /api/v1/upload/artfile/\<artworkId>    |
+
+#### POST Art Details
+
+| Path        | `/api/v1/upload/artdetails`                   |
+| ----------- | ------------------------------------------ |
+| Content-Type        | `application/json`                 |
+| Request Content | A field called `artwork` which is an image file of mime type `image/png` or `image/jpg` |
+| Response    | Returns a JSON object with a success property or an error property. Depending on what happened.              |
+| Example     | POST /api/v1/upload/artdetails/    |
