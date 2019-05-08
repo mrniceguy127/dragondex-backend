@@ -31,8 +31,8 @@ We use the AWS S3 free tier for image hosting.
 ```json
 {
   "id": "bbbbbbbb5555555511111111cccccccc",
-  "username": "mrniceguy127",
-  "displayName": "Matt",
+  "username": "pk558",
+  "displayName": "Phoenix",
   "posts": []
 }
 ```
@@ -62,7 +62,7 @@ We use the AWS S3 free tier for image hosting.
 | Field     | Type      | Description                      |
 | --------- | --------- | -------------------------------- |
 | id        | String    | The unique ID of the user.       |
-| username  | String    | The username for the user. *Not unique.* |
+| username  | String    | A unique username.               |
 | displayName | String  | A display name provided by the user. |
 | posts     | Array of **Art Objects** | An array of the user's uploaded artworks. |
 
@@ -106,6 +106,6 @@ We use the AWS S3 free tier for image hosting.
 | Path        | `/api/v1/upload/artdetails`                |
 | ----------- | ------------------------------------------ |
 | Content-Type        | `application/json`                 |
-| Request Content | A field called `artwork`, which is an image file of mime type `image/png` or `image/jpg`. |
-| Response    | Returns a JSON object with a success property or an error property, depending on whether the operation succeeded. |
+| Request Content | An optional key called "title" that is the title of the artwork. An optional key called "description" that describes the art piece. |
+| Response    | A JSON object of the artwork. |
 | Example     | `POST /api/v1/upload/artdetails/`          |
