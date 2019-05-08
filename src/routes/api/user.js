@@ -45,16 +45,16 @@ module.exports = class ArtAPIRoute extends APIRoute {
 
   async action(req, res, next) {
     let userId = req.params.userId;
-    let query = { id: userId }
-    let userDataRes = {};
+    let query = { id: userId };
 
     let userDoc = await UserModel.findOne(query)
     .then((doc) => {
-      if (!doc) {
+      if (doc) {
+        return doc;
+      } else {
         res.status(400);
         res.json({ error: "No user found." });
-      } else {
-        return doc;
+        return undefined;
       }
     }).catch(err => {
       res.status(500);
@@ -70,11 +70,11 @@ module.exports = class ArtAPIRoute extends APIRoute {
 
       // Get all posts from references
       for (i = 0; i < userDoc.posts.length; i++) {
-        let post = await getPostByReference(userDoc.posts[i], res);
+        let post = await getPostById(userDoc.posts[i], res);
         posts.push(post);
       }
 
-      userDataRes = {
+      let userDataRes = {
         id: userDoc.id.toString(),
         username: userDoc.username,
         displayName: userDoc.displayName,
@@ -86,8 +86,9 @@ module.exports = class ArtAPIRoute extends APIRoute {
   }
 }
 
-async function getPostByReference(ref, res) {
-  let post = await ArtModel.findById(ref) // Art by object ids (found though art references in user doc).
+async function getPostById(id, res) {
+  let query = { id: id };
+  let post = await ArtModel.findOne(query) // Art by object ids (found though art references in user doc).
   .then(art => {
     let postData = { // Format post data
       id: art.id.toString(),
