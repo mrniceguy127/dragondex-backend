@@ -31,8 +31,8 @@ We use the AWS S3 free tier for image hosting.
 ```json
 {
   "id": "bbbbbbbb5555555511111111cccccccc",
-  "username": "pk558",
-  "displayName": "Phoenix",
+  "username": "mrniceguy127",
+  "displayName": "Matt",
   "posts": []
 }
 ```
@@ -62,7 +62,7 @@ We use the AWS S3 free tier for image hosting.
 | Field     | Type      | Description                      |
 | --------- | --------- | -------------------------------- |
 | id        | String    | The unique ID of the user.       |
-| username  | String    | A unique username.               |
+| username  | String    | The username for the user. *Not unique.* |
 | displayName | String  | A display name provided by the user. |
 | posts     | Array of **Art Objects** | An array of the user's uploaded artworks. |
 
