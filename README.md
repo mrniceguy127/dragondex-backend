@@ -22,7 +22,7 @@ We use the AWS S3 free tier for image hosting.
     "title": "This Is A Title",
     "description": "This might be a description."
   },
-  "uploadedBy": {}
+  "postedBy": {}
 }
 ```
 
@@ -48,7 +48,7 @@ We use the AWS S3 free tier for image hosting.
 | id        | String    | The unique ID of the artwork.    |
 | imageUrl  | String    | A URL linking to an image of the artwork. |
 | metadata  | **Art Metadata Object** | Metadata associated with the artwork. |
-| uploadedBy | **User Object** | The user who uploaded the artwork. |
+| postedBy | **User Object** | The user who uploaded the artwork. Not necessarily the artist. |
 
 #### Art Metadata Object
 
@@ -66,11 +66,12 @@ We use the AWS S3 free tier for image hosting.
 | displayName | String  | A display name provided by the user. |
 | posts     | Array of **Art Objects** | An array of the user's uploaded artworks. |
 
-#### Art Details Objects
+#### Art Details Object
+
 | Field     | Type      | Description                      |
 | --------- | --------- | -------------------------------- |
-| title       | String    | The title of the artwork       |
-| description | String    | A description of the artwork   |
+| title       | String    | The title of the artwork.      |
+| description | String    | A description of the artwork.  |
 
 ### Routes
 
@@ -95,16 +96,16 @@ We use the AWS S3 free tier for image hosting.
 #### POST Art File
 | Path        | `/api/v1/upload/artfile`                   |
 | ----------- | ------------------------------------------ |
-| Content-Type        | `multipart/form-data`                      |
-| Request Content | A field called `artwork` which is an image file of mime type `image/png` or `image/jpg` |
-| Response    | Returns a JSON object with a success property or an error property. Depending on what happened.              |
-| Example     | POST /api/v1/upload/artfile/\<artworkId>    |
+| Content-Type | `multipart/form-data`                     |
+| Request Content | A field called `artwork`, which is an image file of mime type `image/png` or `image/jpg`. |
+| Response    | Returns a JSON object with a success property or an error property, depending on whether the operation succeeded. |
+| Example     | `POST /api/v1/upload/artfile/\<artworkId>` |
 
 #### POST Art Details
 
-| Path        | `/api/v1/upload/artdetails`                   |
+| Path        | `/api/v1/upload/artdetails`                |
 | ----------- | ------------------------------------------ |
 | Content-Type        | `application/json`                 |
-| Request Content | A field called `artwork` which is an image file of mime type `image/png` or `image/jpg` |
-| Response    | Returns a JSON object with a success property or an error property. Depending on what happened.              |
-| Example     | POST /api/v1/upload/artdetails/    |
+| Request Content | A field called `artwork`, which is an image file of mime type `image/png` or `image/jpg`. |
+| Response    | Returns a JSON object with a success property or an error property, depending on whether the operation succeeded. |
+| Example     | `POST /api/v1/upload/artdetails/`          |
