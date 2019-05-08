@@ -3,8 +3,6 @@
 /*
   ROUTE WILL REQUIRE AUTHENTICATION
   Request is of the Content-Type 'multi-part/formdata'
-    fields:
-      jsonData: A string of json data of the art work being uploaded (ex. title, description, etc.)
     files:
       artwork: An image file to be uploaded as the artwork. Max 4 MB.
 */
@@ -21,33 +19,28 @@ let s3 = require('./utils/aws-s3')
 // Used for handling file uploads with limitations.
 let artworkUpload;
 
-if (!(process.env.USE_AWS === "true")) {
-  artworkUpload = multer({
-    limits: {
-      fileSize: 4 * 1024 * 1024 * 1024,
-      fields: 1,
-      files: 1
+let artworkUploadOpts = {
+  limits: {
+    fileSize: 4 * 1024 * 1024 * 1024,
+    fields: 1,
+    files: 1
+  }
+};
+
+if ((process.env.USE_AWS === "true")) {
+  artworkUploadOpts.storage = multerS3({
+    s3: s3,
+    bucket: 'dragondex/artwork',
+    acl: 'public-read',
+    key: (req, file, cb) => {
+      let id = req.params.id;
+      cb(null, id);
     }
-  }).single('artwork');
-} else {
-  artworkUpload = multer({
-    storage: multerS3({
-      s3: s3,
-      bucket: 'dragondex/artwork',
-      acl: 'public-read',
-      key: (req, file, cb) => {
-        let id = req.params.id;
-        cb(null, id);
-      }
-    }),
-    limits: {
-      fileSize: 4 * 1024 * 1024 * 1024,
-      fields: 1,
-      files: 1
-    },
-    fileFilter: validateFileData
-  }).single('artwork');
+  });
+  artworkUploadOpts.fileFilter = validateFileData;
 }
+
+artworkUpload = multer(artworkUploadOpts).single('artwork');
 
 module.exports = class UploadArtFileAPIRoute extends APIRoute {
   constructor(app) {

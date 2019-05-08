@@ -2,11 +2,11 @@
 
 /*
   ROUTE WILL REQUIRE AUTHENTICATION
-  Request is of the Content-Type 'multi-part/formdata'
-    fields:
-      jsonData: A string of json data of the art work being uploaded (ex. title, description, etc.)
-    files:
-      artwork: An image file to be uploaded as the artwork. Max 4 MB.
+  Request is of content-type application/json:
+  {
+    "title": "some title" <-- optional
+    "description": "some description" <-- optional
+  }
 */
 
 const mongoose = require('mongoose');
