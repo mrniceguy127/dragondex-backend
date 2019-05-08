@@ -75,6 +75,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
       }
 
       let userDataRes = {
+        id: userDoc.id.toString(),
         username: userDoc.username,
         displayName: userDoc.displayName,
         posts: posts
