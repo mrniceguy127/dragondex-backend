@@ -39,7 +39,7 @@ const ArtModel = dragondexLib.db.models.Art;
 module.exports = class ArtAPIRoute extends APIRoute {
   constructor(app) {
     super(app);
-    this.path = 'user/:userid';
+    this.path = 'user/:userId';
     this.type = 'GET';
   }
 
