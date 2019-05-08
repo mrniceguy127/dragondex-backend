@@ -39,13 +39,13 @@ const ArtModel = dragondexLib.db.models.Art;
 module.exports = class ArtAPIRoute extends APIRoute {
   constructor(app) {
     super(app);
-    this.path = 'user/:userId';
+    this.path = 'user/:username';
     this.type = 'GET';
   }
 
   async action(req, res, next) {
-    let userId = req.params.userId;
-    let query = { id: userId };
+    let username = req.params.username;
+    let query = { username: username };
 
     let userDoc = await UserModel.findOne(query)
     .then((doc) => {
@@ -75,7 +75,6 @@ module.exports = class ArtAPIRoute extends APIRoute {
       }
 
       let userDataRes = {
-        id: userDoc.id.toString(),
         username: userDoc.username,
         displayName: userDoc.displayName,
         posts: posts

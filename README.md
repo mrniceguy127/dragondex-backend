@@ -99,7 +99,7 @@ We use the AWS S3 free tier for image hosting.
 | Content-Type | `multipart/form-data`                     |
 | Request Content | A field called `artwork`, which is an image file of mime type `image/png` or `image/jpg`. |
 | Response    | Returns a JSON object with a success property or an error property, depending on whether the operation succeeded. |
-| Example     | `POST /api/v1/upload/artfile/\<artworkId>` |
+| Example     | `POST /api/v1/upload/artfile/<artworkId>` |
 
 #### POST Art Details
 

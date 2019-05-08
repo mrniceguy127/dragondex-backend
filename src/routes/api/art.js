@@ -25,7 +25,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
         return doc;
       } else {
         res.status(400);
-        res.json({ error: "No user found." });
+        res.json({ error: "No artwork found." });
         return undefined;
       }
     }).catch(err => {
