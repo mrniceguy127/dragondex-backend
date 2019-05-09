@@ -49,7 +49,11 @@ function validateJSONData(req, res, next) {
   let jsonData = req.body;
   let valid = true;
 
-  if (valid && !jsonData.user) {
+  if (!jsonData) {
+    valid = false;
+  }
+
+  if (valid && !jsonData.postedBy) {
     valid = false;
   }
 
@@ -71,7 +75,7 @@ function addArtToDB(req, res, next) {
   let jsonData = req.body;
 
   let newArtData = { // Request data formatted for database.
-    user: jsonData.user,
+    postedBy: jsonData.postedBy,
     id: req.artworkId,
     imageUrl: '',
     metadata: {
@@ -84,7 +88,7 @@ function addArtToDB(req, res, next) {
   ArtModel.create(newArtData)
   .then((artDoc) => {
     let artToAdd = [{ _id: artDoc._id }];
-    let query = { id: newArtData.user };
+    let query = { id: newArtData.postedBy };
     let updateData = { $push: { posts: { $each: artToAdd } } };
     req.artData = newArtData;
     return UserModel.updateOne(query, updateData); // Add artwork reference to the user requesting's User document.

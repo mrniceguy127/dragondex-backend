@@ -33,11 +33,10 @@ module.exports = class ArtAPIRoute extends APIRoute {
       res.json({
         error: "Internal server error."
       });
-      return undefined;
     })
 
     if (artDoc) {
-      let artPostedBy = await getUserById(artDoc.postedBy, res);
+      // let artPostedBy = await getUserById(artDoc.postedBy, res);
 
       let artDocRes = {
         id: artDoc.id.toString(),
@@ -46,7 +45,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
           title: artDoc.metadata.title,
           description: artDoc.metadata.description
         },
-        postedBy: artPostedBy
+        postedBy: artDoc.postedBy
       }
 
       res.json(artDocRes);
