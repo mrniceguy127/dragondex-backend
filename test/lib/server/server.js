@@ -109,18 +109,21 @@ describe('Server tests', () => {
       res.should.have.status(200);
       res.body.should.be.a('object');
       res.body.should.have.property('postedBy');
+      res.body.postedBy.should.be.a('object');
       res.body.should.have.property('id');
       res.body.should.have.property('imageUrl');
       res.body.should.have.property('metadata');
       res.body.metadata.should.have.property('title');
       res.body.metadata.should.have.property('description');
 
-      assert.equal(res.body.postedBy, userDocId);
+      assert.equal(res.body.postedBy.id, userDocId);
+      assert.equal(res.body.postedBy.username, userUsername);
+      assert.equal(res.body.postedBy.displayName, userDisplayName);
+
       assert.equal(res.body.metadata.title, "Chai Tests")
       assert.equal(res.body.metadata.description, "Chai tests are great.")
+
       done();
     });
   });
 });
-
-module.exports = {};

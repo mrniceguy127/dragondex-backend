@@ -26,7 +26,6 @@ module.exports = class ArtAPIRoute extends APIRoute {
       } else {
         res.status(400);
         res.json({ error: "No artwork found." });
-        return undefined;
       }
     }).catch(err => {
       res.status(500);
@@ -36,7 +35,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
     })
 
     if (artDoc) {
-      // let artPostedBy = await getUserById(artDoc.postedBy, res);
+      let artPostedBy = await getUserById(artDoc.postedBy, res);
 
       let artDocRes = {
         id: artDoc.id.toString(),
@@ -45,7 +44,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
           title: artDoc.metadata.title,
           description: artDoc.metadata.description
         },
-        postedBy: artDoc.postedBy
+        postedBy: artPostedBy
       }
 
       res.json(artDocRes);

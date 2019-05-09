@@ -4,7 +4,7 @@
   "description": "The backend for Dragondex, an application for finding and collecting art from around the Drexel University campus.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "start": "node ."
   },
   "keywords": [

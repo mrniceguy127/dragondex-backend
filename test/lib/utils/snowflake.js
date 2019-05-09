@@ -14,5 +14,3 @@ describe('Snowflake ID generation tests', () => {
     }
   });
 });
-
-module.exports = {};

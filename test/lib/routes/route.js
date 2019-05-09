@@ -45,5 +45,3 @@ describe('API route class tests', () => {
     assert.equal(testAPIRoute.getFullPath(), '/api/v1/test');
   });
 });
-
-module.exports = {};
