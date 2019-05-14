@@ -3,8 +3,11 @@ const ArtModel = dragondexLib.db.models.Art;
 const UserModel = dragondexLib.db.models.User;
 const internalServerError = require('../responses/internal-server-error');
 
-module.exports = (req, res, next) => {
+/*
+  Express middleware for adding PRE-VALIDATED (VALIDATED BEFORE THIS FUNCTION IS CALLED) art details to the database.
+*/
 
+module.exports = (req, res, next) => {
   let jsonData = req.body;
 
   let newArtData = { // Request data formatted for database.

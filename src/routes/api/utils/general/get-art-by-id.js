@@ -2,7 +2,11 @@ const dragondexLib = require('../../../../../lib');
 const ArtModel = dragondexLib.db.models.Art;
 const internalServerError = require('../responses/internal-server-error');
 
-async function getPostById(id, res) {
+/*
+  Get art from the database given a valid art ID.
+*/
+
+async function getArtById(id, res) {
   let query = { id: id };
   let post = await ArtModel.findOne(query) // Art by object ids (found though art references in user doc).
   .then(art => {
@@ -26,4 +30,4 @@ async function getPostById(id, res) {
   return post;
 }
 
-module.exports = getPostById;
+module.exports = getArtById;

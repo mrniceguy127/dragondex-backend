@@ -17,6 +17,10 @@ const artIdValidator = require('../validators/art-id');
 const userIdValidator = require('../validators/user-id');
 const APIRoute = dragondexLib.routes.APIRoute;
 
+/*
+  This is the API route for use when a user wants to 'collect' and art piece.
+  This adds the art piece with the given valid art id to the user with the given valid id.
+*/
 
 module.exports = class ArtAPIRoute extends APIRoute {
   constructor(app) {

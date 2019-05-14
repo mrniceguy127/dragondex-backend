@@ -4,9 +4,14 @@ const mongoose = require('mongoose');
 
 const dragondexLib = require('../../../lib');
 const getUserById = require('./utils/general/get-user-by-id');
+const validateArtId = require('./validators/art-id');
 const APIRoute = dragondexLib.routes.APIRoute;
 const UserModel = dragondexLib.db.models.User;
 const ArtModel = dragondexLib.db.models.Art;
+
+/*
+  The GET Art API route that gets a piece of artwork with the specified valid ID.
+*/
 
 
 module.exports = class ArtAPIRoute extends APIRoute {
@@ -16,24 +21,16 @@ module.exports = class ArtAPIRoute extends APIRoute {
     this.type = 'GET';
   }
 
-  async action(req, res, next) {
-    let artId = req.params.artId;
-    let query = { id: artId };
-
-    let artDoc = await ArtModel.findOne(query)
-    .then((doc) => {
-      if (doc) {
-        return doc;
-      } else {
-        res.status(400);
-        res.json({ error: "No artwork found." });
+  middleList() {
+    return [
+      (req, res, next) => {
+        validateArtId(req, res, next, req.params.artId);
       }
-    }).catch(err => {
-      res.status(500);
-      res.json({
-        error: "Internal server error."
-      });
-    })
+    ];
+  }
+
+  async action(req, res, next) {
+    let artDoc = req.artDoc;
 
     if (artDoc) {
       let artPostedBy = await getUserById(artDoc.postedBy, res);

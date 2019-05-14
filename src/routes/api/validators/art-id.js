@@ -3,12 +3,17 @@ const internalServerError = require('../utils/responses/internal-server-error');
 const dragondexLib = require('../../../../lib');
 const ArtModel = dragondexLib.db.models.Art;
 
-module.exports = (req, res, next) => {
-  let id = req.body.artId;
+/*
+  Express middleware that validates whether artwork with the specified ID exists.
+*/
+
+module.exports = (req, res, next, artId = "") => {
+  let id = artId || req.body.artId;
 
   ArtModel.findOne({ id: id })
   .then((artDoc) => {
     if (artDoc) {
+      req.artDoc = artDoc;
       next();
     } else {
       invalidReq(res);

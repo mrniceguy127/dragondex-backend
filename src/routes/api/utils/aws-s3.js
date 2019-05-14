@@ -1,3 +1,7 @@
+/*
+  AWS configuration and AWS S3 settings.
+*/
+
 const AWS = require('aws-sdk');
 
 AWS.config.update({ region: 'us-east-1' });

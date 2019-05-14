@@ -1,5 +1,9 @@
+/*
+  Multer validator that validates that an artwork file uploaded is valid.
+*/
+
 module.exports = (req, file, cb) => {
-  const validMimeTypes = [ // Valid file types
+  const validMimeTypes = [ // Valid file mime types
     'image/png',
     'image/jpg'
   ];

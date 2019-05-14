@@ -4,6 +4,10 @@ const artFileValidator = require('../../validators/artfile');
 
 let s3 = require('../aws-s3')
 
+/*
+  Multer middleware that is setup before being exported from the file.
+*/
+
 // Used for handling file uploads with limitations.
 let artworkUpload;
 
