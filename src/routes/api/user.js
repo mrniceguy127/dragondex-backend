@@ -30,6 +30,7 @@ EXAMPLE RESPONSE DATA:
 const mongoose = require('mongoose');
 
 const dragondexLib = require('../../../lib');
+const getPostById = require('./utils/general/get-post-by-id');
 const APIRoute = dragondexLib.routes.APIRoute;
 const UserModel = dragondexLib.db.models.User;
 const ArtModel = dragondexLib.db.models.Art;
@@ -77,37 +78,11 @@ module.exports = class ArtAPIRoute extends APIRoute {
         id: userDoc.id.toString(),
         username: userDoc.username,
         displayName: userDoc.displayName,
-        posts: posts
+        posts: posts,
+        collectedArt: userDoc.collectedArt
       }
 
       res.json(userDataRes);
     }
   }
-}
-
-async function getPostById(id, res) {
-  let query = { id: id };
-  let post = await ArtModel.findOne(query) // Art by object ids (found though art references in user doc).
-  .then(art => {
-    if (art) {
-      let postData = { // Format post data
-        id: art.id.toString(),
-        imageUrl: art.imageUrl,
-        metadata: {
-          title: art.metadata.title,
-          description: art.metadata.description
-        }
-      };
-      return postData;
-    }
-  })
-  .catch((err) => {
-    console.log(err.stack);
-    res.status(500);
-    res.json({
-      error: "Internal server error."
-    });
-  });
-
-  return post;
 }

@@ -64,6 +64,8 @@ describe('Server tests', () => {
         res.body.should.have.property('displayName');
         res.body.should.have.property('posts');
         res.body.posts.should.be.a('array');
+        res.body.should.have.property('collectedArt');
+        res.body.collectedArt.should.be.a('array');
 
         assert.equal(res.body.id, userDocId)
         assert.equal(res.body.username, userUsername)
@@ -124,6 +126,36 @@ describe('Server tests', () => {
       assert.equal(res.body.metadata.description, "Chai tests are great.")
 
       done();
+    });
+  });
+
+  it('should POST /api/v1/update/artcollection', (done) => {
+    let art = {
+      artId: artDocId,
+      userId: userDocId
+    };
+
+    chai.request(server.server)
+    .post('/api/v1/update/artcollection')
+    .send(art)
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.have.property('collectedArt');
+      res.body.collectedArt.should.be.a('array');
+      expect(res.body.collectedArt).to.have.lengthOf(1);
+      expect(res.body.collectedArt[0]).to.equal(artDocId);
+
+      done();
+    });
+  });
+
+  after(() => {
+    return new Promise((resolve, reject) => {
+      UserModel.deleteMany({ id: userDocId }).then(() => {
+        resolve();
+      }).catch((err) => {
+        reject(err);
+      });
     });
   });
 });

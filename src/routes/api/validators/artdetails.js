@@ -1,4 +1,4 @@
-const respondAsInvalidReqData = require('../utils/responses/invalid-req');
+const invalidReq = require('../utils/responses/invalid-req');
 
 module.exports = (req, res, next) => {
   let jsonData = req.body;
@@ -15,6 +15,6 @@ module.exports = (req, res, next) => {
   if (valid) {
     next();
   } else {
-    respondAsInvalidReqData(res);
+    invalidReq(res);
   }
 };

@@ -11,8 +11,8 @@ const dragondexLib = require('../../../../lib');
 const APIRoute = dragondexLib.routes.APIRoute;
 const ArtModel = dragondexLib.db.models.Art;
 
-const validateArtId = require('./validators/art-id');
-const artworkUpload = require('./utils/artfile/multer-upload');
+const validateArtId = require('../validators/art-id');
+const artworkUpload = require('../utils/artfile/multer-upload');
 
 module.exports = class UploadArtFileAPIRoute extends APIRoute {
   constructor(app) {

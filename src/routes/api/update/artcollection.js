@@ -1,0 +1,45 @@
+// The /art sub route for the base API route.
+
+/*
+  ROUTE WILL REQUIRE AUTHENTICATION
+  Request is of content-type application/json:
+  {
+    "artId": "some id of art to add to collection",
+    "userId": "some user id of a user adding to their collection." <-- currently being used for testing purposes.
+  }
+*/
+
+const mongoose = require('mongoose');
+
+const dragondexLib = require('../../../../lib');
+const addToUserArtCollection = require('../utils/artcollection/add-to-user-art-collection');
+const artIdValidator = require('../validators/art-id');
+const userIdValidator = require('../validators/user-id');
+const APIRoute = dragondexLib.routes.APIRoute;
+
+
+module.exports = class ArtAPIRoute extends APIRoute {
+  constructor(app) {
+    super(app);
+    this.path = 'update/artcollection';
+    this.type = 'POST';
+  }
+
+  middleList() {
+    return [
+      artIdValidator,
+      (req, res, next) => {
+        userIdValidator(req, res, next, req.body.userId);
+      }
+    ];
+  }
+
+  async action(req, res, next) {
+    let artId = req.body.artId;
+    let userId = req.body.userId;
+
+    let resData = await addToUserArtCollection(userId, artId, res);
+
+    res.json(resData);
+  }
+}

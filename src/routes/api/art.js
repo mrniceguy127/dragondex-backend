@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 
 const dragondexLib = require('../../../lib');
+const getUserById = require('./utils/general/get-user-by-id');
 const APIRoute = dragondexLib.routes.APIRoute;
 const UserModel = dragondexLib.db.models.User;
 const ArtModel = dragondexLib.db.models.Art;
@@ -50,25 +51,4 @@ module.exports = class ArtAPIRoute extends APIRoute {
       res.json(artDocRes);
     }
   }
-}
-
-async function getUserById(id, res) {
-  let query = { id: id };
-  let postedBy = await UserModel.findOne(query) // User by id (in postedBy)
-  .then(user => {
-    let userData = { // Format data
-      id: user.id.toString(),
-      username: user.username,
-      displayName: user.displayName
-    };
-    return userData;
-  })
-  .catch(() => {
-    res.status(500);
-    res.json({
-      error: "Internal server error."
-    });
-  });
-
-  return postedBy;
 }

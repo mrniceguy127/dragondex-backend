@@ -13,8 +13,8 @@ const dragondexLib = require('../../../../lib');
 const APIRoute = dragondexLib.routes.APIRoute;
 const Snowflake = dragondexLib.utils.Snowflake;
 
-const artDetailsValidator = require('./validators/artdetails');
-const addArtToDB = require('./utils/artdetails/add-art-to-db');
+const artDetailsValidator = require('../validators/artdetails');
+const addArtToDB = require('../utils/artdetails/add-art-to-db');
 
 let snowflakeIDGenerator = new Snowflake();
 

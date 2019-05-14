@@ -1,7 +1,7 @@
-const dragondexLib = require('../../../../../../lib');
+const dragondexLib = require('../../../../../lib');
 const ArtModel = dragondexLib.db.models.Art;
 const UserModel = dragondexLib.db.models.User;
-const respondAsInvalidReqData = require('../responses/invalid-req');
+const internalServerError = require('../responses/internal-server-error');
 
 module.exports = (req, res, next) => {
 
@@ -31,6 +31,6 @@ module.exports = (req, res, next) => {
   })
   .catch(() => {
     console.log("Art doc faile creation.");
-    respondAsInvalidReqData(res);
+    internalServerError(res);
   });
 }

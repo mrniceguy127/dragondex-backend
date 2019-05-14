@@ -33,7 +33,8 @@ We use the AWS S3 free tier for image hosting.
   "id": "bbbbbbbb5555555511111111cccccccc",
   "username": "pk558",
   "displayName": "Phoenix",
-  "posts": []
+  "posts": [],
+  "collectedArt": []
 }
 ```
 
@@ -65,6 +66,7 @@ We use the AWS S3 free tier for image hosting.
 | username  | String    | A username. *Not unique*.        |
 | displayName | String  | A display name provided by the user. |
 | posts     | Array of **Art Objects** | An array of the user's uploaded artworks. |
+| collectedArt | Array of **Art** IDs | An array of Art IDs that are a part of the user's collection. |
 
 #### Art Details Object
 
@@ -90,6 +92,7 @@ We use the AWS S3 free tier for image hosting.
 #### GET User
 | Path        | `/api/v1/user`                             |
 | ----------- | ------------------------------------------ |
+| Content-Type | `application/json`                        |
 | Response    | Returns a `User` object.                   |
 | Example     | `GET /api/v1/user/<ID here>`               |
 
@@ -105,7 +108,16 @@ We use the AWS S3 free tier for image hosting.
 
 | Path        | `/api/v1/upload/artdetails`                |
 | ----------- | ------------------------------------------ |
-| Content-Type        | `application/json`                 |
+| Content-Type | `application/json`                        |
 | Request Content | An optional key called "title" that is the title of the artwork. An optional key called "description" that describes the art piece. |
 | Response    | A JSON object of the artwork.              |
+| Example     | `POST /api/v1/upload/artdetails/`          |
+
+### POST Update User Collection
+
+| Path        | `/api/v1/update/artcollection`             |
+| ----------- | ------------------------------------------ |
+| Content-Type | `application/json`                        |
+| Request Content | A "userId" key that is paired with the user's ID (currently for testing purposes) and a key called "artId", which is the ID of the artwork to add to the collection. |
+| Response    | A JSON object with a property called "collectedArt" that is an array of all the Art IDs in the updated art collection. |
 | Example     | `POST /api/v1/upload/artdetails/`          |
