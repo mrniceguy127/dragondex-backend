@@ -9,8 +9,6 @@
   }
 */
 
-const mongoose = require('mongoose');
-
 const dragondexLib = require('../../../../lib');
 const addToUserArtCollection = require('../utils/artcollection/add-to-user-art-collection');
 const artIdValidator = require('../validators/art-id');

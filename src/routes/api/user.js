@@ -27,14 +27,10 @@ EXAMPLE RESPONSE DATA:
 }
 */
 
-const mongoose = require('mongoose');
-
 const dragondexLib = require('../../../lib');
 const getArtById = require('./utils/general/get-art-by-id');
 const validateUserId = require('./validators/user-id');
 const APIRoute = dragondexLib.routes.APIRoute;
-const UserModel = dragondexLib.db.models.User;
-const ArtModel = dragondexLib.db.models.Art;
 
 /*
   The GET User API route that gets a user object given a valid user ID.

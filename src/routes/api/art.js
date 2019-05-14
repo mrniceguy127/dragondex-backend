@@ -1,13 +1,9 @@
 // The /art sub route for the base API route.
 
-const mongoose = require('mongoose');
-
 const dragondexLib = require('../../../lib');
 const getUserById = require('./utils/general/get-user-by-id');
 const validateArtId = require('./validators/art-id');
 const APIRoute = dragondexLib.routes.APIRoute;
-const UserModel = dragondexLib.db.models.User;
-const ArtModel = dragondexLib.db.models.Art;
 
 /*
   The GET Art API route that gets a piece of artwork with the specified valid ID.
