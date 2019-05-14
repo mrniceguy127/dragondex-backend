@@ -19,7 +19,7 @@ const addArtToDB = require('../utils/artdetails/add-art-to-db');
 let snowflakeIDGenerator = new Snowflake();
 
 /*
-  The API route for uploading the details about a piece of artwork. This upload comes BEFORE uploading an image of the artwork.
+  The API route for uploading the details about a piece of artwork. This upload comes before uploading an image of the artwork.
 */
 
 module.exports = class UploadArtDetailsAPIRoute extends APIRoute {
@@ -27,23 +27,6 @@ module.exports = class UploadArtDetailsAPIRoute extends APIRoute {
     super(app);
     this.path = 'upload/artdetails';
     this.type = 'POST';
-    let i;
-
-    // Get all posts from references
-    for (i = 0; i < userDoc.posts.length; i++) {
-      let post = await getArtById(userDoc.posts[i], res);
-      posts.push(post);
-    }
-
-    let userDataRes = {
-      id: userDoc.id.toString(),
-      username: userDoc.username,
-      displayName: userDoc.displayName,
-      posts: posts,
-      collectedArt: userDoc.collectedArt
-    }
-
-    res.json(userDataRes);
   }
 
   middleList() {
