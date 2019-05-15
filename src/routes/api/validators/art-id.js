@@ -8,7 +8,7 @@ const ArtModel = dragondexLib.db.models.Art;
 */
 
 module.exports = (req, res, next, artId = "") => {
-  let id = artId || req.body.artId;
+  let id = artId || req.body.id;
 
   ArtModel.findOne({ id: id })
   .then((artDoc) => {

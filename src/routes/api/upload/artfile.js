@@ -27,7 +27,9 @@ module.exports = class UploadArtFileAPIRoute extends APIRoute {
 
   middleList() {
     return [
-      validateArtId,
+      (req, res, next) => {
+        validateArtId(req, res, next, req.params.id);
+      },
       artworkUpload
     ];
   }

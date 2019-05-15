@@ -29,7 +29,9 @@ module.exports = class ArtAPIRoute extends APIRoute {
 
   middleList() {
     return [
-      artIdValidator,
+      (req, res, next) => {
+        artIdValidator(req, res, next, req.body.artId);
+      },
       (req, res, next) => {
         userIdValidator(req, res, next, req.body.userId);
       }
