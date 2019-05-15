@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dragondex</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <style>
+      .hidden {
+        display: none;
+      }
+      #nav {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+      body {
+        background-color: #e1e8f1;
+      }
+      #content {
+        margin: 0 auto;
+        max-width: 800px;
+      }
+      #content-inner {
+        background-color: #fff;
+        border-radius: 5px;
+        border: 1px solid #bdcad3;
+        box-shadow: #00000017 0 8px 12px;
+        margin: 1rem;
+        margin-top: 75px;
+        padding: 2rem;
+      }
+      #errorView {
+        padding: 1rem 2rem;
+      }
+      #artView {
+        text-align: center;
+      }
+      #artTitle {
+        font-size: 28pt;
+        font-weight: normal;
+      }
+      #artImg {
+        height: auto;
+        max-width: 500px;
+        width: 100%;
+      }
+      #artView p {
+        font-size: 14pt;
+        font-weight: normal;
+        margin: 20px;
+      }
+      #artPostedByBlock {
+        color: #616161;
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="nav" class="navbar navbar-dark" style="background: #003a77;">
+      <a class="navbar-brand" href="/">Dragondex</a>
+    </nav>
+    <div id="content">
+      <div id="content-inner">
+        <div id="errorView" class="hidden">
+          <h2 id="errorMsg"></h2>
+          <p id="errorDesc"></p>
+        </div>
+        <div id="artView" class="hidden">
+          <h2 id="artTitle"></h2>
+          <p id="artDesc"></p>
+          <p id="artPostedByBlock">
+            Posted by <a id="artPostedBy" src="#"></a>
+          </p>
+          <img id="artImg" />
+        </div>
+      </div>
+    </div>
+    <script>
+      var baseURL = "/static";
+
+      var thisUrl = new URL(window.location.href);
+
+      var artId = thisUrl.searchParams.get("id");
+      var apiUrl = "/api/v1/art/" + artId;
+
+      function showError(title, desc) {
+        var errorMsg = document.getElementById("errorMsg");
+        errorMsg.innerHTML = title;
+
+        var errorDesc = document.getElementById("errorDesc");
+        errorDesc.innerHTML = desc;
+
+        var errorViewE = document.getElementById("errorView");
+        errorViewE.className = "";
+      }
+
+      fetch(apiUrl)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        if (data.id) {
+          // Found artwork
+          var title = data.metadata.title;
+          var desc = data.metadata.description;
+          var imageUrl = data.imageUrl;
+          var postedBy = data.postedBy;
+
+          var artTitle = document.getElementById("artTitle");
+          artTitle.innerHTML = title;
+
+          var artDesc = document.getElementById("artDesc");
+          artDesc.innerHTML = desc;
+
+          var artImg = document.getElementById("artImg");
+          artImg.src = imageUrl;
+
+          var artPostedBy = document.getElementById("artPostedBy");
+          artPostedBy.innerHTML = postedBy.displayName;
+          artPostedBy.href = baseURL + "/user?id=" + postedBy.id;
+
+          var artViewE = document.getElementById("artView");
+          artViewE.className = "";
+        } else {
+          // Error locating artwork
+          var errorMsg = "Could not locate artwork!";
+          var errorDesc = "The ID provided is invalid.";
+          showError(errorMsg, errorDesc);
+        }
+      })
+      .catch(function(err) {
+        var errorMsg = "Could not locate artwork!";
+        var errorDesc = "There was an error retrieving this information.";
+        showError(errorMsg, errorDesc);
+      });
+    </script>
+  </body>
+</html>
