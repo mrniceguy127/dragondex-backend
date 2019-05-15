@@ -23,7 +23,7 @@ module.exports = (req, res, next) => {
 
   ArtModel.create(newArtData)
   .then((artDoc) => {
-    let artToAdd = [{ _id: artDoc._id }];
+    let artToAdd = [artDoc.id];
     let query = { id: newArtData.postedBy };
     let updateData = { $push: { posts: { $each: artToAdd } } };
     req.artData = newArtData;
