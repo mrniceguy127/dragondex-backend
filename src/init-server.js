@@ -1,9 +1,13 @@
+
 const path = require('path');
 const http = require('http');
 const express = require('express');
-const dragondexLib = require('../lib');
 const rateLimit = require('express-rate-limit');
+
 const mongoose = require('mongoose');
+require('mongoose-long')(mongoose);
+
+const dragondexLib = require('../lib');
 
 /*
   1. Set database settings
@@ -16,7 +20,6 @@ const mongoose = require('mongoose');
 */
 
 mongoose.set('useCreateIndex', true);
-require('mongoose-long')(mongoose);
 
 
 mongoose.connect(process.env.MONGODB_SERVER || 'mongodb://localhost/dragondex', { useNewUrlParser: true });
