@@ -18,7 +18,8 @@ We use the AWS S3 free tier for image hosting.
 | GOOGLE_CLIENT_SECRET | The client secret of the Google OAuth2 Application. | someClIEntSecrET12345 |
 | SESSION_SECRET | The session secret for user sessions. | SoMeSeSsIoNsEcREtT&78965&*^87 |
 | USE_AUTH | **SET TO `true` IN PRODUCTION**. You can set this to `false` in a testing environment. | `true` or `false` |
-| USE_AWS | Whether or not to use AWS S3 for image hosting. Provide credentials as documented by Amazon AWS. | `true` or `false` |
+| USE_AWS | Whether or not to use AWS S3 for image hosting. Provide credentials as documented by Amazon AWS (e.g. via the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables). | `true` or `false` |
+| PORT | The server port to listen on. | `3000` |
 
 ## Document Structure
 
