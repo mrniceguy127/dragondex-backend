@@ -38,6 +38,7 @@
       }
       #userBanner {
         padding: 1rem 2rem;
+        position: relative;
       }
       #userDisplay {
         font-size: 28pt;
@@ -77,6 +78,11 @@
         font-size: 12pt;
         margin-left: 120px;
       }
+      #collectionBtn {
+        position: absolute;
+        right: 2rem;
+        top: 1rem;
+      }
 
       @media (max-width: 480px) {
         #userDisplay {
@@ -103,6 +109,10 @@
         #errorView, #userBanner, .userPost {
           padding: 0.7rem 1.4rem;
         }
+        #collectionBtn {
+          margin-top: 0.3rem;
+          position: static;
+        }
       }
     </style>
   </head>
@@ -120,6 +130,7 @@
           <div id="userBanner">
             <h2 id="userDisplay"></h2>
             <h6 id="username"></h6>
+            <button id="collectionBtn" type="button" class="btn btn-light">View Dragondex</button>
           </div>
           <div id="userPosts">
           </div>
@@ -133,6 +144,11 @@
 
       var userId = thisUrl.searchParams.get("id");
       var apiUrl = "/api/v1/user/" + userId;
+
+      var collectionBtnE = document.getElementById("collectionBtn");
+      collectionBtnE.addEventListener("click", function() {
+        window.location = baseURL + "/collection?id=" + userId;
+      });
 
       function showError(title, desc) {
         var errorMsg = document.getElementById("errorMsg");
