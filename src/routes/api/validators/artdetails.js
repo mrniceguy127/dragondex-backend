@@ -13,10 +13,6 @@ module.exports = (req, res, next) => {
     valid = false;
   }
 
-  if (valid && !jsonData.postedBy) {
-    valid = false;
-  }
-
   if (valid) {
     next();
   } else {

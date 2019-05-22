@@ -131,7 +131,7 @@ describe('Server tests', () => {
 
   it('should POST /api/v1/update/artcollection', (done) => {
     let art = {
-      artId: artDocId,
+      id: artDocId,
       userId: userDocId
     };
 

@@ -10,6 +10,16 @@ We also are using a RESTful API to handle server requests.
 
 We use the AWS S3 free tier for image hosting.
 
+## Environment Variables
+
+| Name | Description | Example |
+| ---- | ----------- | ------- |
+| GOOGLE_CLIENT_ID | The client ID of the Google OAuth2 Application. | `1191382839-some-client-id.apps.googleusercontent.com` |
+| GOOGLE_CLIENT_SECRET | The client secret of the Google OAuth2 Application. | someClIEntSecrET12345 |
+| SESSION_SECRET | The session secret for user sessions. | SoMeSeSsIoNsEcREtT&78965&*^87 |
+| USE_AUTH | **SET TO `true` IN PRODUCTION**. You can set this to `false` in a testing environment. | `true` or `false` |
+| USE_AWS | Whether or not to use AWS S3 for image hosting. Provide credentials as documented by Amazon AWS. | `true` or `false` |
+
 ## Document Structure
 
 ### Art Object
@@ -109,7 +119,7 @@ We use the AWS S3 free tier for image hosting.
 | Path        | `/api/v1/upload/artdetails`                |
 | ----------- | ------------------------------------------ |
 | Content-Type | `application/json`                        |
-| Request Content | An optional key called "title" that is the title of the artwork. An optional key called "description" that describes the art piece. |
+| Request Content | An optional key called "title" that is the title of the artwork. An optional key called "description" that describes the art piece. Also can contain an optional key called "userId" if opting out of `USE_AUTH` in the environment variables to specify a user to modify. |
 | Response    | A JSON object of the artwork.              |
 | Example     | `POST /api/v1/upload/artdetails/`          |
 
@@ -118,6 +128,6 @@ We use the AWS S3 free tier for image hosting.
 | Path        | `/api/v1/update/artcollection`             |
 | ----------- | ------------------------------------------ |
 | Content-Type | `application/json`                        |
-| Request Content | A "userId" key that is paired with the user's ID (currently for testing purposes) and a key called "artId", which is the ID of the artwork to add to the collection. |
+| Request Content | A key called "id", which is the ID of the artwork to add to the collection. Also can contain an optional key called "userId" if opting out of `USE_AUTH` in the environment variables to specify user to modify. |
 | Response    | A JSON object with a property called "collectedArt" that is an array of all the Art IDs in the updated art collection. |
 | Example     | `POST /api/v1/upload/artdetails/`          |

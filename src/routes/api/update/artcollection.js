@@ -13,6 +13,7 @@ const dragondexLib = require('../../../../lib');
 const addToUserArtCollection = require('../utils/artcollection/add-to-user-art-collection');
 const artIdValidator = require('../validators/art-id');
 const userIdValidator = require('../validators/user-id');
+const checkAuth = require('../utils/auth/check-auth');
 const APIRoute = dragondexLib.routes.APIRoute;
 
 /*
@@ -29,6 +30,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
 
   middleList() {
     return [
+      checkAuth,
       (req, res, next) => {
         artIdValidator(req, res, next, req.body.artId);
       },
@@ -39,8 +41,8 @@ module.exports = class ArtAPIRoute extends APIRoute {
   }
 
   async action(req, res, next) {
-    let artId = req.body.artId;
-    let userId = req.body.userId;
+    let artId = req.body.id;
+    let userId = process.env.USE_AUTH === "true" ? req.user.id : req.body.userId;
 
     let resData = await addToUserArtCollection(userId, artId, res);
 

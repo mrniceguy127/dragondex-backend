@@ -13,6 +13,7 @@ const ArtModel = dragondexLib.db.models.Art;
 
 const validateArtId = require('../validators/art-id');
 const artworkUpload = require('../utils/artfile/multer-upload');
+const checkAuth = require('../utils/auth/check-auth');
 
 /*
   This is the API route used for uploading the art file to the artwork with the given valid ID. This comes AFTER uploading the details of the artwork.
@@ -27,6 +28,7 @@ module.exports = class UploadArtFileAPIRoute extends APIRoute {
 
   middleList() {
     return [
+      checkAuth,
       (req, res, next) => {
         validateArtId(req, res, next, req.params.id);
       },

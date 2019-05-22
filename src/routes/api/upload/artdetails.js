@@ -15,6 +15,7 @@ const Snowflake = dragondexLib.utils.Snowflake;
 
 const artDetailsValidator = require('../validators/artdetails');
 const addArtToDB = require('../utils/artdetails/add-art-to-db');
+const checkAuth = require('../utils/auth/check-auth');
 
 let snowflakeIDGenerator = new Snowflake();
 
@@ -31,6 +32,7 @@ module.exports = class UploadArtDetailsAPIRoute extends APIRoute {
 
   middleList() {
     return [
+      checkAuth,
       genSnowflake,
       artDetailsValidator,
       addArtToDB

@@ -20,11 +20,12 @@ module.exports = (req, res, next) => {
     }
   };
 
+  let userId = process.env.USE_AUTH === "true" ? req.user.id : newArtData.postedBy;
 
   ArtModel.create(newArtData)
   .then((artDoc) => {
     let artToAdd = [artDoc.id];
-    let query = { id: newArtData.postedBy };
+    let query = { id: userId };
     let updateData = { $push: { posts: { $each: artToAdd } } };
     req.artData = newArtData;
     return UserModel.updateOne(query, updateData); // Add artwork reference to the user requesting's User document.
