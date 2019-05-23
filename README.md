@@ -100,7 +100,7 @@ We use the AWS S3 free tier for image hosting.
 
 ### Routes
 
-#### Base URL
+#### Base API URL
 
 ```
 /api/v1
