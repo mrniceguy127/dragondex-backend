@@ -21,9 +21,11 @@ We use the AWS S3 free tier for image hosting.
 | USE_AWS | Whether or not to use AWS S3 for image hosting. Provide credentials as documented by Amazon AWS (e.g. via the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables). | `true` or `false` |
 | PORT | The server port to listen on. | `3000` |
 
-## Document Structure
+## Documents
 
 ### Art Object
+
+#### Structure
 
 ```json
 {
@@ -37,7 +39,13 @@ We use the AWS S3 free tier for image hosting.
 }
 ```
 
+#### Properties
+
+\---
+
 ### User Object
+
+#### Structure
 
 ```json
 {
@@ -48,6 +56,10 @@ We use the AWS S3 free tier for image hosting.
   "collectedArt": []
 }
 ```
+
+#### Properties
+
+\---
 
 ## API
 
