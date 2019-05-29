@@ -189,8 +189,16 @@
           var username = data.username;
           var displayName = data.displayName;
 
-          //var collection = data.collectedArt;
-          var collection = [
+          var collection = data.collectedArt;
+          /*var collection = [
+            {
+              id: "2",
+              imageUrl: "https://i.imgur.com/JchBo3I.png",
+              metadata: {
+                title: "Mohammed Avdol",
+                description: "Yes, I am!"
+              }
+            },
             {
               id: "3",
               imageUrl: "https://i.imgur.com/8z3fhNe.jpg",
@@ -199,7 +207,7 @@
                 description: "Bionic Janitor... Bionic Janitor... Bionic Jaaaaaaa-aaaanitor... Bionic Janitor... Bionic Janitor!"
               }
             }
-          ];
+          ];*/
 
           var collectionTitleE = document.getElementById("collectionTitle");
           collectionTitleE.innerHTML = displayName + "'s Dragondex";

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, user-scalable=no" />
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/solid.css" integrity="sha384-ioUrHig76ITq4aEJ67dHzTvqjsAP/7IzgwE7lgJcg2r7BRNGYSK0LwSmROzYtgzs" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/fontawesome.css" integrity="sha384-sri+NftO+0hcisDKgr287Y/1LVnInHJ1l+XC7+FOabmTTIK0HnE2ID+xxvJ21c5J" crossorigin="anonymous" />
     <style>
       .hidden {
         display: none;
@@ -85,6 +88,10 @@
         </div>
         <div id="artView" class="hidden">
           <h2 id="artTitle"></h2>
+          <button id="addToCollectionBtn" type="button" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Add to Dragondex
+          </button>
           <p id="artDesc"></p>
           <p id="artPostedByBlock">
             Posted by <a id="artPostedBy" src="#"></a>
@@ -101,6 +108,8 @@
       var artId = thisUrl.searchParams.get("id");
       var apiUrl = "/api/v1/art/" + artId;
 
+      var addToCollectionUrl = "/api/v1/update/artcollection";
+
       function showError(title, desc) {
         var errorMsg = document.getElementById("errorMsg");
         errorMsg.innerHTML = title;
@@ -110,6 +119,42 @@
 
         var errorViewE = document.getElementById("errorView");
         errorViewE.className = "";
+      }
+
+      var isArtAddedToCollection = false;
+
+      function setUpAddToCollectionBtn() {
+        var addToCollectionBtnE = document.getElementById("addToCollectionBtn");
+        addToCollectionBtnE.addEventListener('click', function() {
+          if (!isArtAddedToCollection) {
+            fetch(addToCollectionUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                id: artId,
+                userId: 1
+              })
+            })
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              if (data.collectedArt) {
+                showCollectionBtnSuccess();
+              }
+            });
+          }
+        });
+      }
+
+      function showCollectionBtnSuccess() {
+        var addToCollectionBtnE = document.getElementById("addToCollectionBtn");
+        addToCollectionBtnE.innerHTML = "<i class=\"fas fa-check\"></i> Registered in Dragondex!";
+        addToCollectionBtnE.className = "btn btn-success";
+
+        isArtAddedToCollection = true;
       }
 
       fetch(apiUrl)
@@ -139,6 +184,12 @@
 
           var artViewE = document.getElementById("artView");
           artViewE.className = "";
+
+          if (data.userCollected) {
+            showCollectionBtnSuccess();
+          } else {
+            setUpAddToCollectionBtn();
+          }
         } else {
           // Error locating artwork
           var errorMsg = "Could not locate artwork!";
