@@ -190,31 +190,13 @@
           var displayName = data.displayName;
 
           var collection = data.collectedArt;
-          /*var collection = [
-            {
-              id: "2",
-              imageUrl: "https://i.imgur.com/JchBo3I.png",
-              metadata: {
-                title: "Mohammed Avdol",
-                description: "Yes, I am!"
-              }
-            },
-            {
-              id: "3",
-              imageUrl: "https://i.imgur.com/8z3fhNe.jpg",
-              metadata: {
-                title: "Bionic Janitor",
-                description: "Bionic Janitor... Bionic Janitor... Bionic Jaaaaaaa-aaaanitor... Bionic Janitor... Bionic Janitor!"
-              }
-            }
-          ];*/
 
           var collectionTitleE = document.getElementById("collectionTitle");
           collectionTitleE.innerHTML = displayName + "'s Dragondex";
 
           var collectionE = document.getElementById("userCollection");
           if (collection.length > 0) {
-            for (var i = 0; i < collection.length; i++) {
+            for (var i = collection.length - 1; i >= 0; i--) {
               var collectionItem = collection[i];
               addCollectionItem(collectionE, collectionItem);
             }
