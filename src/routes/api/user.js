@@ -39,14 +39,14 @@ const APIRoute = dragondexLib.routes.APIRoute;
 module.exports = class ArtAPIRoute extends APIRoute {
   constructor(app) {
     super(app);
-    this.path = 'user/:userId';
+    this.path = 'user';
     this.type = 'GET';
   }
 
   middleList() {
     return [
       (req, res, next) => {
-        validateUserId(req, res, next, req.params.userId);
+        validateUserId(req, res, next, req.user.id);
       }
     ];
   }
