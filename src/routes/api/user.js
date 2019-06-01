@@ -54,6 +54,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
   async action(req, res, next) {
     let userDoc = req.userDoc;
     let posts = [];
+    let collectedArt = [];
     let i;
 
     // Get all posts from references
@@ -62,12 +63,18 @@ module.exports = class ArtAPIRoute extends APIRoute {
       posts.push(post);
     }
 
+    // Get all collected art from references
+    for (i = 0; i < userDoc.collectedArt.length; i++) {
+      let art = await getArtById(userDoc.collectedArt[i], res);
+      collectedArt.push(art);
+    }
+
     let userDataRes = {
       id: userDoc.id.toString(),
       username: userDoc.username,
       displayName: userDoc.displayName,
       posts: posts,
-      collectedArt: userDoc.collectedArt
+      collectedArt: collectedArt
     }
 
     res.json(userDataRes);
