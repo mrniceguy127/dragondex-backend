@@ -1,4 +1,4 @@
-// The /user sub route for the base API route.
+// The /user sub route for the base API route, without a required ID.
 
 /*
 EXAMPLE RESPONSE DATA:
@@ -33,21 +33,21 @@ const validateUserId = require('./validators/user-id');
 const APIRoute = dragondexLib.routes.APIRoute;
 
 /*
-  The GET User API route that gets a user object given a valid user ID.
+  The GET User API route that gets a User object for the current logged in user.
 */
 
-module.exports = class UserAPIRoute extends APIRoute {
+module.exports = class UserCurrentAPIRoute extends APIRoute {
   constructor(app) {
     super(app);
-    this.path = 'user/:userId';
+    this.path = 'user';
     this.type = 'GET';
   }
 
   middleList() {
     return [
       (req, res, next) => {
-        // Passes in user ID from URL
-        validateUserId(req, res, next, req.params.userId);
+        // Passes in user ID from current session
+        validateUserId(req, res, next, req.user.id);
       }
     ];
   }
