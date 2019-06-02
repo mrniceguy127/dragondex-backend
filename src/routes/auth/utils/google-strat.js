@@ -40,6 +40,7 @@ if (process.env.USE_AUTH === "true") {
       } else {
         let docToCreateData = query;
         docToCreateData.username = profile.email.replace(/@.*/g, "");
+        docToCreateData.displayName = profile.displayName;
         docToCreateData.id = sf.gen();
 
         UserModel.create(docToCreateData).then((newUserDoc) => {

@@ -56,5 +56,5 @@ server.app.use(passport.session());
 server.app.use(express.json());
 
 server.registerRoutes();
-server.app.use('/static', express.static(path.join(__dirname, './public')));
+server.app.use('/', express.static(path.join(__dirname, './public')));
 server.listen('Server running on port ' + server.port + '!');
