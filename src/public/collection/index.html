@@ -36,82 +36,78 @@
       #errorView {
         padding: 1rem 2rem;
       }
-      #userBanner {
+      #collectionBanner {
         padding: 1rem 2rem;
-        position: relative;
       }
-      #userDisplay {
+      #collectionTitle {
         font-size: 28pt;
         font-weight: normal;
       }
-      #username {
+      #collectionSubtitle {
         color: #7a7a7a;
         font-size: 14pt;
         font-weight: normal;
       }
-      .userPost {
+      .collectionItem {
         display: block;
         padding: 1rem 2rem;
         text-decoration: none;
       }
-      .userPost:hover {
+      .collectionItem:hover {
         background-color: #e1e8f1;
         text-decoration: none;
       }
-      .userPost div {
+      .collectionItem div {
         height: 100px;
         position: relative;
         overflow-y: hidden;
       }
-      .userPost img {
+      .collectionItem img {
         height: 100px;
         width: 100px;
         position: absolute;
       }
-      .userPost h3 {
+      .collectionItem h3 {
         color: #000;
         font-size: 18pt;
         margin-left: 120px;
       }
-      .userPost p {
+      .collectionItem p {
         color: #0000009e;
         font-size: 12pt;
         margin-left: 120px;
       }
-      #collectionBtn {
-        position: absolute;
-        right: 2rem;
-        top: 1rem;
+      #userCollection h6 {
+        color: #313131;
+        font-size: 16pt;
+        font-weight: normal;
+        text-align: center;
       }
 
       @media (max-width: 480px) {
-        #userDisplay {
+        #collectionTitle {
           font-size: 22pt;
         }
-        #username {
+        #collectionSubtitle {
           font-size: 11pt;
         }
-        .userPost div {
+        .collectionItem div {
           height: 70px;
         }
-        .userPost img {
+        .collectionItem img {
           height: 70px;
           width: 70px;
         }
-        .userPost h3 {
+        .collectionItem h3 {
           font-size: 15pt;
           margin-left: 90px;
         }
-        .userPost p {
+        .collectionItem p {
           font-size: 10pt;
           margin-left: 90px;
         }
-        #errorView, #userBanner, .userPost {
+        #errorView, #collectionBanner, .collectionItem {
           padding: 0.7rem 1.4rem;
-        }
-        #collectionBtn {
-          margin-top: 0.3rem;
-          position: static;
         }
       }
     </style>
@@ -126,13 +122,12 @@
           <h2 id="errorMsg"></h2>
           <p id="errorDesc"></p>
         </div>
-        <div id="userView" class="hidden">
-          <div id="userBanner">
-            <h2 id="userDisplay"></h2>
-            <h6 id="username"></h6>
-            <button id="collectionBtn" type="button" class="btn btn-light">View Dragondex</button>
+        <div id="collectionView" class="hidden">
+          <div id="collectionBanner">
+            <h2 id="collectionTitle"></h2>
+            <h6 id="collectionSubtitle">Locate artwork around campus and save it to your collection here!</h6>
           </div>
-          <div id="userPosts">
+          <div id="userCollection">
           </div>
         </div>
       </div>
@@ -145,11 +140,6 @@
       var userId = thisUrl.searchParams.get("id");
       var apiUrl = "/api/v1/user/" + userId;
 
-      var collectionBtnE = document.getElementById("collectionBtn");
-      collectionBtnE.addEventListener("click", function() {
-        window.location = baseURL + "/collection?id=" + userId;
-      });
-
       function showError(title, desc) {
         var errorMsg = document.getElementById("errorMsg");
         errorMsg.innerHTML = title;
@@ -161,34 +151,34 @@
         errorViewE.className = "";
       }
 
-      function addUserPost(postsElement, postData) {
-        var artId = postData.id;
-        var imageUrl = postData.imageUrl;
-        var artTitle = postData.metadata.title;
-        var artDesc = postData.metadata.description;
+      function addCollectionItem(collectionElement, itemData) {
+        var artId = itemData.id;
+        var imageUrl = itemData.imageUrl;
+        var artTitle = itemData.metadata.title;
+        var artDesc = itemData.metadata.description;
 
-        var userPostImg = document.createElement("img");
-        userPostImg.src = imageUrl;
+        var itemImg = document.createElement("img");
+        itemImg.src = imageUrl;
 
-        var userPostTitle = document.createElement("h3");
-        var userPostTitleText = document.createTextNode(artTitle);
-        userPostTitle.appendChild(userPostTitleText);
+        var itemTitle = document.createElement("h3");
+        var itemTitleText = document.createTextNode(artTitle);
+        itemTitle.appendChild(itemTitleText);
 
-        var userPostDesc = document.createElement("p");
-        var userPostDescText = document.createTextNode(artDesc);
-        userPostDesc.appendChild(userPostDescText);
+        var itemDesc = document.createElement("p");
+        var itemDescText = document.createTextNode(artDesc);
+        itemDesc.appendChild(itemDescText);
 
-        var userPostDiv = document.createElement("div");
-        userPostDiv.appendChild(userPostImg);
-        userPostDiv.appendChild(userPostTitle);
-        userPostDiv.appendChild(userPostDesc);
+        var itemDiv = document.createElement("div");
+        itemDiv.appendChild(itemImg);
+        itemDiv.appendChild(itemTitle);
+        itemDiv.appendChild(itemDesc);
 
-        var userPostAnchor = document.createElement("a");
-        userPostAnchor.className = "userPost";
-        userPostAnchor.href = baseURL + "/art?id=" + artId;
-        userPostAnchor.appendChild(userPostDiv);
+        var itemAnchor = document.createElement("a");
+        itemAnchor.className = "collectionItem";
+        itemAnchor.href = baseURL + "/art?id=" + artId;
+        itemAnchor.appendChild(itemDiv);
 
-        postsElement.appendChild(userPostAnchor);
+        collectionElement.appendChild(itemAnchor);
       }
 
       fetch(apiUrl)
@@ -201,33 +191,33 @@
           var username = data.username;
           var displayName = data.displayName;
 
-          var posts = data.posts;
+          var collection = data.collectedArt;
 
-          var displayNameE = document.getElementById("userDisplay");
-          var displayNameText = document.createTextNode(displayName);
-          displayNameE.appendChild(displayNameText);
+          var collectionTitleE = document.getElementById("collectionTitle");
+          var collectionTitleText = document.createTextNode(displayName + "'s Dragondex");
+          collectionTitleE.appendChild(collectionTitleText);
 
-          var usernameE = document.getElementById("username");
-          var usernameText = document.createTextNode(username);
-          usernameE.appendChild(usernameText);
-
-          var userPostsE = document.getElementById("userPosts");
-          for (var i = posts.length - 1; i >= 0; i--) {
-            var post = posts[i];
-            addUserPost(userPostsE, post);
+          var collectionE = document.getElementById("userCollection");
+          if (collection.length > 0) {
+            for (var i = collection.length - 1; i >= 0; i--) {
+              var collectionItem = collection[i];
+              addCollectionItem(collectionE, collectionItem);
+            }
+          } else {
+            collectionE.innerHTML = "<hr/><h6>You haven't collected any artwork yet. Try exploring Drexel's campus!</h6>";
           }
 
-          var userViewE = document.getElementById("userView");
-          userViewE.className = "";
+          var collectionViewE = document.getElementById("collectionView");
+          collectionViewE.className = "";
         } else {
           // Error locating artwork
-          var errorMsg = "Could not locate user!";
+          var errorMsg = "Could not retrieve Dragondex!";
           var errorDesc = "The ID provided is invalid.";
           showError(errorMsg, errorDesc);
         }
       })
       .catch(function(err) {
-        var errorMsg = "Could not locate artwork!";
+        var errorMsg = "Could not retrieve Dragondex!";
         var errorDesc = "There was an error retrieving this information.";
         showError(errorMsg, errorDesc);
       });
