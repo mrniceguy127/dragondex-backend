@@ -170,16 +170,19 @@
           var postedBy = data.postedBy;
 
           var artTitle = document.getElementById("artTitle");
-          artTitle.innerHTML = title;
+          var artTitleText = document.createTextNode(title);
+          artTitle.appendChild(artTitleText);
 
           var artDesc = document.getElementById("artDesc");
-          artDesc.innerHTML = desc;
+          var artDescText = document.createTextNode(desc);
+          artDesc.appendChild(artDescText);
 
           var artImg = document.getElementById("artImg");
           artImg.src = imageUrl;
 
           var artPostedBy = document.getElementById("artPostedBy");
-          artPostedBy.innerHTML = postedBy.displayName;
+          var artPostedByText = document.createTextNode(postedBy.displayName);
+          artPostedBy.appendChild(artPostedByText);
           artPostedBy.href = baseURL + "/user?id=" + postedBy.id;
 
           var artViewE = document.getElementById("artView");
