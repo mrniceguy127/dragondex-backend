@@ -30,6 +30,7 @@ EXAMPLE RESPONSE DATA:
 const dragondexLib = require('../../../lib');
 const getArtById = require('./utils/general/get-art-by-id');
 const validateUserId = require('./validators/user-id');
+const unauthorized = require('./utils/responses/unauthorized');
 const APIRoute = dragondexLib.routes.APIRoute;
 
 /*
@@ -47,7 +48,12 @@ module.exports = class UserCurrentAPIRoute extends APIRoute {
     return [
       (req, res, next) => {
         // Passes in user ID from current session
-        validateUserId(req, res, next, req.user.id);
+        if (process.env.USE_AUTH && req.user) {
+          let userId = req.user.id;
+          validateUserId(req, res, next, req.user.id);
+        } else {
+          unauthorized(res);
+        }
       }
     ];
   }

@@ -108,6 +108,8 @@
       var artId = thisUrl.searchParams.get("id");
       var apiUrl = "/api/v1/art/" + artId;
 
+      var currentUserUrl = "/api/v1/user";
+
       var addToCollectionUrl = "/api/v1/update/artcollection";
 
       function showError(title, desc) {
@@ -119,6 +121,30 @@
 
         var errorViewE = document.getElementById("errorView");
         errorViewE.className = "";
+      }
+
+      function checkUserCollection() {
+        fetch(currentUserUrl)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          var collectedArt = data.collectedArt;
+          var userCollected = false;
+
+          for (var i = 0; i < collectedArt.length; i++) {
+            if (collectedArt[i].id === artId) {
+              userCollected = true;
+              break;
+            }
+          }
+
+          if (userCollected) {
+            showCollectionBtnSuccess();
+          } else {
+            setUpAddToCollectionBtn();
+          }
+        });
       }
 
       var isArtAddedToCollection = false;
@@ -187,11 +213,7 @@
           var artViewE = document.getElementById("artView");
           artViewE.className = "";
 
-          if (data.userCollected) {
-            showCollectionBtnSuccess();
-          } else {
-            setUpAddToCollectionBtn();
-          }
+          checkUserCollection();
         } else {
           // Error locating artwork
           var errorMsg = "Could not locate artwork!";
