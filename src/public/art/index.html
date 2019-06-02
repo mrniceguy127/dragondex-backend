@@ -88,7 +88,7 @@
         </div>
         <div id="artView" class="hidden">
           <h2 id="artTitle"></h2>
-          <button id="addToCollectionBtn" type="button" class="btn btn-primary">
+          <button id="addToCollectionBtn" type="button" class="hidden btn btn-primary">
             <i class="fas fa-plus"></i>
             Add to Dragondex
           </button>
@@ -130,27 +130,33 @@
         })
         .then(function(data) {
           var collectedArt = data.collectedArt;
-          var userCollected = false;
+          if (collectedArt) {
+            var userCollected = false;
 
-          for (var i = 0; i < collectedArt.length; i++) {
-            if (collectedArt[i].id === artId) {
-              userCollected = true;
-              break;
+            for (var i = 0; i < collectedArt.length; i++) {
+              if (collectedArt[i].id === artId) {
+                userCollected = true;
+                break;
+              }
             }
-          }
 
-          if (userCollected) {
-            showCollectionBtnSuccess();
+            if (userCollected) {
+              showCollectionBtnSuccess();
+            } else {
+              setUpAddToCollectionBtn();
+            }
           } else {
-            setUpAddToCollectionBtn();
+            hideAddToCollectionBtn();
           }
         });
       }
 
       var isArtAddedToCollection = false;
+      var isUserLoggedIn = true;
 
       function setUpAddToCollectionBtn() {
         var addToCollectionBtnE = document.getElementById("addToCollectionBtn");
+        addToCollectionBtnE.className = "btn btn-primary";
         addToCollectionBtnE.addEventListener('click', function() {
           if (!isArtAddedToCollection) {
             fetch(addToCollectionUrl, {
@@ -174,12 +180,11 @@
         });
       }
 
-      function showCollectionBtnSuccess() {
+      function hideAddToCollectionBtn() {
         var addToCollectionBtnE = document.getElementById("addToCollectionBtn");
-        addToCollectionBtnE.innerHTML = "<i class=\"fas fa-check\"></i> Registered in Dragondex!";
-        addToCollectionBtnE.className = "btn btn-success";
+        addToCollectionBtnE.className = "hidden";
 
-        isArtAddedToCollection = true;
+        isUserLoggedIn = false;
       }
 
       fetch(apiUrl)
