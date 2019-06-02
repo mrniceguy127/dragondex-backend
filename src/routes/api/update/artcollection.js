@@ -35,7 +35,7 @@ module.exports = class ArtAPIRoute extends APIRoute {
         artIdValidator(req, res, next, req.body.artId);
       },
       (req, res, next) => {
-        userIdValidator(req, res, next, req.body.userId);
+        userIdValidator(req, res, next, process.env.USE_AUTH === "true" ? req.user.id : req.body.userId);
       }
     ];
   }
