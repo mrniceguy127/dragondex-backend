@@ -9,7 +9,7 @@ const getUserById = require('../general/get-user-by-id');
 
 async function addToUserArtCollection(userId, artId, res) {
   let userQuery = { id: userId };
-  let artUpdateData = { $push: { collectedArt: artId } };
+  let artUpdateData = { $addToSet: { collectedArt: artId } };
   let newUserArtCollection = await UserModel.updateOne(userQuery, artUpdateData)
   .then(async () => {
     let userData = await getUserById(userQuery.id, res);
