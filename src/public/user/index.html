@@ -171,10 +171,12 @@
         userPostImg.src = imageUrl;
 
         var userPostTitle = document.createElement("h3");
-        userPostTitle.innerHTML = artTitle;
+        var userPostTitleText = document.createTextNode(artTitle);
+        userPostTitle.appendChild(userPostTitleText);
 
         var userPostDesc = document.createElement("p");
-        userPostDesc.innerHTML = artDesc;
+        var userPostDescText = document.createTextNode(artDesc);
+        userPostDesc.appendChild(userPostDescText);
 
         var userPostDiv = document.createElement("div");
         userPostDiv.appendChild(userPostImg);
@@ -202,10 +204,12 @@
           var posts = data.posts;
 
           var displayNameE = document.getElementById("userDisplay");
-          displayNameE.innerHTML = displayName;
+          var displayNameText = document.createTextNode(displayName);
+          displayNameE.appendChild(displayNameText);
 
           var usernameE = document.getElementById("username");
-          usernameE.innerHTML = username;
+          var usernameText = document.createTextNode(username);
+          usernameE.appendChild(usernameText);
 
           var userPostsE = document.getElementById("userPosts");
           for (var i = posts.length - 1; i >= 0; i--) {

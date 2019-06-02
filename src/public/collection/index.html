@@ -161,10 +161,12 @@
         itemImg.src = imageUrl;
 
         var itemTitle = document.createElement("h3");
-        itemTitle.innerHTML = artTitle;
+        var itemTitleText = document.createTextNode(artTitle);
+        itemTitle.appendChild(itemTitleText);
 
         var itemDesc = document.createElement("p");
-        itemDesc.innerHTML = artDesc;
+        var itemDescText = document.createTextNode(artDesc);
+        itemDesc.appendChild(itemDescText);
 
         var itemDiv = document.createElement("div");
         itemDiv.appendChild(itemImg);
@@ -192,7 +194,8 @@
           var collection = data.collectedArt;
 
           var collectionTitleE = document.getElementById("collectionTitle");
-          collectionTitleE.innerHTML = displayName + "'s Dragondex";
+          var collectionTitleText = document.createTextNode(displayName + "'s Dragondex");
+          collectionTitleE.appendChild(collectionTitleText);
 
           var collectionE = document.getElementById("userCollection");
           if (collection.length > 0) {
