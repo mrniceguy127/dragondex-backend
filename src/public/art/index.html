@@ -180,6 +180,14 @@
         });
       }
 
+      function showCollectionBtnSuccess() {
+        var addToCollectionBtnE = document.getElementById("addToCollectionBtn");
+        addToCollectionBtnE.innerHTML = "<i class=\"fas fa-check\"></i> Registered in Dragondex!";
+        addToCollectionBtnE.className = "btn btn-success";
+
+        isArtAddedToCollection = true;
+      }
+
       function hideAddToCollectionBtn() {
         var addToCollectionBtnE = document.getElementById("addToCollectionBtn");
         addToCollectionBtnE.className = "hidden";
